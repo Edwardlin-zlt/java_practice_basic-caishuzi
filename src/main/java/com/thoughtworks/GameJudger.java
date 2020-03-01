@@ -1,13 +1,11 @@
 package com.thoughtworks;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class GameJudger {
     private List<Integer> answer;
-    private List<List<Integer>> guessHistory = new LinkedList<>();
     private String guessHistoryDescribe = "";
 
     public GameJudger(List<Integer> answer) {
@@ -23,9 +21,7 @@ public class GameJudger {
     }
 
     public boolean judgeAnswer(List<Integer> userAnswer) throws WrongInputException {
-        // 1. 合法输入
         checkInputAnswer(userAnswer);
-        // 2. judge A B
         byte aTypeAnswerCounter = 0;
         byte bTypeAnswerCounter = 0;
         for (int i = 0; i < userAnswer.size(); i++) {
@@ -43,10 +39,7 @@ public class GameJudger {
     }
 
     private void checkInputAnswer(List<Integer> userAnswer) throws WrongInputException {
-        Set<Integer> userAnswerSet = new HashSet<>();
-        for (Integer integer : userAnswer) {
-            userAnswerSet.add(integer);
-        }
+        Set<Integer> userAnswerSet = new HashSet<>(userAnswer);
         if (userAnswerSet.size() != 4) {
             updateHistory(userAnswer, "Wrong input");
             throw new WrongInputException("Wrong input");
@@ -54,7 +47,6 @@ public class GameJudger {
     }
 
     private void updateHistory(List<Integer> userAnswer, String curDescribe) {
-        guessHistory.add(userAnswer);
         StringBuilder userAnswerStr = new StringBuilder();
         for (Integer integer : userAnswer) {
             userAnswerStr.append(integer);

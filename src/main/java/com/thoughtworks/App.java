@@ -18,6 +18,7 @@ public class App {
             String userAnswer = sc.next();
             try {
                 if (gameJudger.judgeAnswer(userAnswer)) {
+                    // TODO 如何提取这几个sout
                     System.out.println(userAnswer + " // 第" + CHINESE_NUMBER[i] + "次");
                     System.out.println(gameJudger.getGuessHistoryDescribe());
                     System.out.print("You Win!!!!!!!");
@@ -32,7 +33,7 @@ public class App {
                 System.out.println(gameJudger.getGuessHistoryDescribe());
             }
         }
-        System.out.print("Unfortunately, you have no chance, the answer is " + String.join("", answer) + "");
+        System.out.print("Unfortunately, you have no chance, the answer is " + answer + "");
     }
 
     public static String getAnswer() {

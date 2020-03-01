@@ -1,9 +1,7 @@
 package com.thoughtworks.answergenerator;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public interface AnswerGenerator {
-    List<Integer> getAnswer() throws IOException;
+    String getAnswer() throws IOException; // TODO randomAnswerGenerator throw?? // try...在File里面处理?
 }

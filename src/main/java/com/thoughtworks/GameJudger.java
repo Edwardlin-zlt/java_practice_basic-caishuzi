@@ -1,14 +1,13 @@
 package com.thoughtworks;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class GameJudger {
-    private List<Integer> answer;
+    private String answer;
     private String guessHistoryDescribe = "";
 
-    public GameJudger(List<Integer> answer) {
+    public GameJudger(String answer) {
         this.answer = answer;
     }
 
@@ -16,41 +15,36 @@ public class GameJudger {
         return guessHistoryDescribe;
     }
 
-    public List<Integer> getAnswer() {
-        return answer;
-    }
-
-    public boolean judgeAnswer(List<Integer> userAnswer) throws WrongInputException {
+    public boolean judgeAnswer(String userAnswer) throws WrongInputException {
         checkInputAnswer(userAnswer);
         byte aTypeAnswerCounter = 0;
         byte bTypeAnswerCounter = 0;
-        for (int i = 0; i < userAnswer.size(); i++) {
-            int curValue = userAnswer.get(i);
-            if (answer.get(i).equals(curValue)){
+        for (int i = 0; i < userAnswer.length(); i++) {
+            char curValue = userAnswer.charAt(i);
+            if (answer.charAt(i) == curValue){
                 aTypeAnswerCounter++;
-            } else if (answer.contains(curValue)){
+            } else if (answer.contains(Character.toString(curValue))){
                 bTypeAnswerCounter++;
             }
         }
 
         String curDescribe = aTypeAnswerCounter+ "A" + bTypeAnswerCounter + "B";
         updateHistory(userAnswer, curDescribe);
-        return aTypeAnswerCounter == 4;
+        return aTypeAnswerCounter == answer.length();
     }
 
-    private void checkInputAnswer(List<Integer> userAnswer) throws WrongInputException {
-        Set<Integer> userAnswerSet = new HashSet<>(userAnswer);
+    private void checkInputAnswer(String userAnswer) throws WrongInputException {
+        Set<Character> userAnswerSet = new HashSet<>();
+        for (int i=0; i<userAnswer.length(); i++){
+            userAnswerSet.add(userAnswer.charAt(i));
+        }
         if (userAnswerSet.size() != 4) {
             updateHistory(userAnswer, "Wrong input");
             throw new WrongInputException("Wrong input");
         }
     }
 
-    private void updateHistory(List<Integer> userAnswer, String curDescribe) {
-        StringBuilder userAnswerStr = new StringBuilder();
-        for (Integer integer : userAnswer) {
-            userAnswerStr.append(integer);
-        }
-        guessHistoryDescribe += userAnswerStr.append(" ").append(curDescribe).append("\n");
+    private void updateHistory(String userAnswer, String curDescribe) {
+        guessHistoryDescribe += userAnswer + " " + curDescribe + "\n";
     }
 }

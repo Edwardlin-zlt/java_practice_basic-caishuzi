@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RandomAnswerGenerator implements AnswerGenerator{
+public class RandomAnswerGenerator implements AnswerGenerator {
     private static Random r = new Random();
 
     @Override
-    public List<Integer> getAnswer() {
-        List<Integer> answer = new ArrayList<>();
+    public String getAnswer() {
+        List<String> answer = new ArrayList<>();
         while (answer.size() < 4) {
-            answer.add(r.nextInt(10));
+            String value = String.valueOf(r.nextInt(10));
+            if (answer.contains(value)) {
+                continue;
+            }
+            answer.add(value);
         }
-        return answer;
+        return String.join("", answer);
+//        return (Character[]) answer.toArray(); // 使用Character[]和List<Character>的优劣
     }
 }
